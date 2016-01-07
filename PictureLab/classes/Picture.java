@@ -229,4 +229,39 @@ public class Picture extends SimplePicture
     beach.explore();
   }
   
+  
+  public void mirrorVerticalRightToLeft()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    Pixel leftPixel = null;
+    Pixel rightPixel = null;
+    
+    for (int i = 0; i < pixels.length; i++)
+    {
+        for (int j = 0; j < pixels[i].length / 2; j++)
+        {
+            leftPixel = pixels[i][j];
+            rightPixel = pixels[i][pixels[i].length - 1 - j];
+            rightPixel.setColor(leftPixel.getColor());
+        }
+    }
+    }
+    
+    
+  //public void mirrorHorizontal()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    Pixel leftPixel = null;
+    Pixel rightPixel = null;
+    
+    for (int i = 0; i < pixels.length; i++)
+    {
+        for (int j = 0; j < pixels[i].length / 2; j++)
+        {
+            leftPixel = pixels[i][j];
+            rightPixel = pixels[i][pixels[i].length - 1 - j];
+            rightPixel.setColor(leftPixel.getColor());
+        }
+    }
+    }
 } // this } is the end of class Picture, put all new methods before this
