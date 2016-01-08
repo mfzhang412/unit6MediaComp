@@ -248,20 +248,63 @@ public class Picture extends SimplePicture
     }
     
     
-  //public void mirrorHorizontal()
+  public void mirrorHorizontal()
   {
     Pixel[][] pixels = this.getPixels2D();
-    Pixel leftPixel = null;
-    Pixel rightPixel = null;
+    Pixel topPixel = null;
+    Pixel bottomPixel = null;
     
-    for (int i = 0; i < pixels.length; i++)
+    for (int i = 0; i < pixels.length / 2; i++)
     {
-        for (int j = 0; j < pixels[i].length / 2; j++)
+        for (int j = 0; j < pixels[i].length; j++)
         {
-            leftPixel = pixels[i][j];
-            rightPixel = pixels[i][pixels[i].length - 1 - j];
-            rightPixel.setColor(leftPixel.getColor());
+            topPixel = pixels[i][j];
+            bottomPixel = pixels[pixels.length - 1 - i][j];
+            bottomPixel.setColor(topPixel.getColor());
+        }
+    }
+    }
+    
+    
+  public void mirrorHorizontalBotToTop()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    Pixel topPixel = null;
+    Pixel bottomPixel = null;
+      
+      for (int i = 0; i < pixels.length / 2; i++)
+    {
+        for (int j = 0; j < pixels[i].length; j++)
+        {
+            topPixel = pixels[i][j];
+            bottomPixel = pixels[pixels.length - 1 - i][j];
+            topPixel.setColor(bottomPixel.getColor());
         }
     }
     }
 } // this } is the end of class Picture, put all new methods before this
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
