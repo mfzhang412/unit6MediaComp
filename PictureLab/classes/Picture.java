@@ -335,6 +335,33 @@ public class Picture extends SimplePicture
     }
     System.out.println(count);
   }
+  
+  
+  public void copyAndCrop( Picture sourcePicture,
+  int startSourceRow, int endSourceRow,
+  int startSourceCol, int endSourceCol,
+  int startDestRow, int startDestCol )
+  {
+      Pixel sourcePixel = null;
+      Pixel endPixel = null;
+      Pixel[][] sourceGrid = sourcePicture.getPixels2D();
+      Pixel[][] endGrid = this.getPixels2D();
+      int counter1 = 0;
+      int counter2 = 0;
+      
+      for (int i = startSourceRow; startSourceRow < endSourceRow; startSourceRow++)
+      {
+          for (int j = startSourceCol; startSourceCol < endSourceCol; startSourceCol++)
+          {
+              sourcePixel = sourceGrid[i][j];
+              endPixel = endGrid[startDestRow + counter1][startDestCol + counter2];
+              endPixel.setColor(sourcePixel.getColor());
+              counter2++;
+          }
+          counter1++;
+          counter2 = 0;
+      }
+  }
 } // this } is the end of class Picture, put all new methods before this
 
 

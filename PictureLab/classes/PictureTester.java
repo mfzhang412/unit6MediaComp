@@ -91,6 +91,16 @@ public class PictureTester
       seagull.explore();
     }
     
+  public static void testCopyAndCrop()
+  {
+      Picture seagull = new Picture("seagull.jpg");
+      Picture snowman = new Picture("snowman.jpg");
+      
+      snowman.explore();
+      snowman.copyAndCrop(seagull, 229, 323, 235, 350, 0, 0);
+      snowman.explore();
+    }
+    
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
@@ -109,7 +119,8 @@ public class PictureTester
     //testMirrorHorizontal();
     //testMirrorHorizontalBotToTop();
     //testMirrorArm();
-    testMirrorGull();
+    //testMirrorGull();
+    testCopyAndCrop();
     //testMirrorTemple();
     //testMirrorArms();
     //testMirrorGull();
