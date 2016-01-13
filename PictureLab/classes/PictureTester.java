@@ -97,7 +97,16 @@ public class PictureTester
       Picture snowman = new Picture("snowman.jpg");
       
       snowman.explore();
-      snowman.copyAndCrop(seagull, 229, 323, 235, 350, 0, 0);
+      snowman.copyAndCrop(seagull, 229, 323, 235, 350, 50, 100);
+      snowman.explore();
+    }
+  
+  public static void testScaleByHalf()
+  {
+      Picture snowman = new Picture("snowman.jpg");
+      
+      snowman.explore();
+      snowman.scaleByHalf();
       snowman.explore();
     }
     

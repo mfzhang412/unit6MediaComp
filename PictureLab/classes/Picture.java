@@ -349,9 +349,9 @@ public class Picture extends SimplePicture
       int counter1 = 0;
       int counter2 = 0;
       
-      for (int i = startSourceRow; startSourceRow < endSourceRow; startSourceRow++)
+      for (int i = startSourceRow; i < endSourceRow; i++)
       {
-          for (int j = startSourceCol; startSourceCol < endSourceCol; startSourceCol++)
+          for (int j = startSourceCol; j < endSourceCol; j++)
           {
               sourcePixel = sourceGrid[i][j];
               endPixel = endGrid[startDestRow + counter1][startDestCol + counter2];
@@ -361,6 +361,30 @@ public class Picture extends SimplePicture
           counter1++;
           counter2 = 0;
       }
+  }
+  
+  
+  public Picture scaleByHalf()
+  {
+      Picture picture = new Picture("640x480.jpg");
+      Pixel[][] pixels = this.getPixels2D();
+      Pixel[][] picturePixels = picture.getPixels2D();
+      Pixel origPixel = null;
+      int counter1 = 0;
+      int counter2 = 0;
+      
+      for (int i = 0; i < pixels.length; i += 2)
+      {
+          for (int j = 0; j < pixels[i].length; j += 2)
+          {
+              origPixel = pixels[i][j];
+              picturePixels[counter1][counter2].setColor(origPixel.getColor());
+              counter2++;
+          }
+          counter1++;
+      }
+      
+      return picture;
   }
 } // this } is the end of class Picture, put all new methods before this
 
