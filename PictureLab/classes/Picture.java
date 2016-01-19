@@ -178,18 +178,34 @@ public class Picture extends SimplePicture
   /** Method to create a collage of several pictures */
   public void createCollage()
   {
-    Picture flower1 = new Picture("flower1.jpg");
-    Picture flower2 = new Picture("flower2.jpg");
-    this.copy(flower1,0,0);
-    this.copy(flower2,100,0);
-    this.copy(flower1,200,0);
-    Picture flowerNoBlue = new Picture(flower2);
-    flowerNoBlue.zeroBlue();
-    this.copy(flowerNoBlue,300,0);
-    this.copy(flower1,400,0);
-    this.copy(flower2,500,0);
-    this.mirrorVertical();
-    this.write("collage.jpg");
+      Picture canvas = new Picture(4608, 6144);
+      Picture origBridge = new Picture("bridge.jpg");
+      origBridge.scaleByHalf();
+      origBridge.write("scaledBridge.jpg");
+      
+      Picture bridge1 = new Picture("scaledBridge.jpg");
+      Picture bridge2 = new Picture("scaledBridge.jpg");
+      Picture bridge3 = new Picture("scaledBridge.jpg");
+      Picture bridge4 = new Picture("scaledBridge.jpg");
+      Picture bridge5 = new Picture("scaledBridge.jpg");
+      
+      bridge2.mirrorVerticalRightToLeft();
+      
+      canvas.copyAndCrop(bridge1, 0, 1152, 0, 1536, 0, 0);
+      
+      
+    //     Picture flower1 = new Picture("flower1.jpg");
+    //     Picture flower2 = new Picture("flower2.jpg");
+    //     this.copy(flower1,0,0);
+    //     this.copy(flower2,100,0);
+    //     this.copy(flower1,200,0);
+    //     Picture flowerNoBlue = new Picture(flower2);
+    //     flowerNoBlue.zeroBlue();
+    //     this.copy(flowerNoBlue,300,0);
+    //     this.copy(flower1,400,0);
+    //     this.copy(flower2,500,0);
+    //     this.mirrorVertical();
+    //     this.write("collage.jpg");
   }
   
   
@@ -245,6 +261,24 @@ public class Picture extends SimplePicture
             leftPixel = pixels[i][j];
             rightPixel = pixels[i][pixels[i].length - 1 - j];
             rightPixel.setColor(leftPixel.getColor());
+        }
+    }
+    }
+    
+    
+  public void mirrorVerticalLeftToRight()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    Pixel leftPixel = null;
+    Pixel rightPixel = null;
+    
+    for (int i = 0; i < pixels.length; i++)
+    {
+        for (int j = 0; j < pixels[i].length / 2; j++)
+        {
+            leftPixel = pixels[i][j];
+            rightPixel = pixels[i][pixels[i].length - 1 - j];
+            leftPixel.setColor(rightPixel.getColor());
         }
     }
     }
@@ -366,7 +400,7 @@ public class Picture extends SimplePicture
   
   public Picture scaleByHalf()
   {
-      Picture picture = new Picture("640x480.jpg");
+      Picture picture = new Picture(1152, 1536);
       Pixel[][] pixels = this.getPixels2D();
       Pixel[][] picturePixels = picture.getPixels2D();
       Pixel origPixel = null;

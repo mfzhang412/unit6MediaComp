@@ -110,6 +110,13 @@ public class PictureTester
       snowman.explore();
     }
     
+  public static void testCreateCollage()
+  {
+      Picture finalCollage = new Picture("finalCollage.jpg");
+      
+      finalCollage.explore();
+    }
+    
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
@@ -117,7 +124,7 @@ public class PictureTester
     // uncomment a call here to run a test
     // and comment out the ones you don't want
     // to run
-    testZeroBlue();
+    //testZeroBlue();
     //testKeepOnlyBlue();
     //testKeepOnlyRed();
     //testKeepOnlyGreen();
@@ -129,7 +136,7 @@ public class PictureTester
     //testMirrorHorizontalBotToTop();
     //testMirrorArm();
     //testMirrorGull();
-    testCopyAndCrop();
+    //testCopyAndCrop();
     //testMirrorTemple();
     //testMirrorArms();
     //testMirrorGull();
@@ -144,5 +151,6 @@ public class PictureTester
     //testSetRedToHalfValueInTopHalf();
     //testClearBlueOverValue(200);
     //testGetAverageForColumn(0);
+    testCreateCollage();
   }
 }
