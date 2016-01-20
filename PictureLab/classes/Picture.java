@@ -175,6 +175,41 @@ public class Picture extends SimplePicture
     }  
   }
 
+  public void keepOnlyRed()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+        if (pixelObj.getRed() < 100)
+        {
+            pixelObj.setRed(pixelObj.getRed() - 30);
+            pixelObj.setGreen(pixelObj.getGreen() - 30);
+            pixelObj.setBlue(pixelObj.getBlue() - 30);
+        }
+        else
+        {
+            pixelObj.setRed(pixelObj.getRed() + 30);
+        }
+      }
+    }
+  }
+  
+  public void grayScale()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+          pixelObj.setRed(pixelObj.getRed() - 50);
+          pixelObj.setGreen(pixelObj.getGreen() - 50);
+          pixelObj.setBlue(pixelObj.getBlue() - 50);
+      }
+    }
+  }
+  
   /** Method to create a collage of several pictures */
   public void createCollage()
   {
@@ -190,9 +225,11 @@ public class Picture extends SimplePicture
       Picture bridge5 = new Picture("scaledBridge.jpg");
       
       bridge2.mirrorVerticalRightToLeft();
+      bridge2.keepOnlyRed();
+      bridge3.mirrorVerticalLeftToRight();
       
-      canvas.copyAndCrop(bridge1, 0, 1152, 0, 1536, 0, 0);
-      
+      canvas.copyAndCrop(bridge2, 0, 1152, 0, 1536, 0, 1728);
+      canvas.copyAndCrop(bridge3, 0, 1152, 0, 1536, 1152, 1728);
       
     //     Picture flower1 = new Picture("flower1.jpg");
     //     Picture flower2 = new Picture("flower2.jpg");
@@ -246,7 +283,6 @@ public class Picture extends SimplePicture
     beach.zeroBlue();
     beach.explore();
   }
-  
   
   public void mirrorVerticalRightToLeft()
   {

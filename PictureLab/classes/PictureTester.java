@@ -109,6 +109,15 @@ public class PictureTester
       snowman.scaleByHalf();
       snowman.explore();
     }
+     
+  public static void testKeepOnlyRed()
+  {
+      Picture bridge = new Picture("bridge.jpg");
+      
+      bridge.explore();
+      bridge.keepOnlyRed();
+      bridge.explore();
+    }
     
   public static void testCreateCollage()
   {
