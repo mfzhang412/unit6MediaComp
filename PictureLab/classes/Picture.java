@@ -184,13 +184,13 @@ public class Picture extends SimplePicture
       {
         if (pixelObj.getRed() < 100)
         {
-            pixelObj.setRed(pixelObj.getRed() - 30);
-            pixelObj.setGreen(pixelObj.getGreen() - 30);
-            pixelObj.setBlue(pixelObj.getBlue() - 30);
+            pixelObj.setRed(pixelObj.getRed() - 50);
+            pixelObj.setGreen(pixelObj.getGreen() - 50);
+            pixelObj.setBlue(pixelObj.getBlue() - 50);
         }
         else
         {
-            pixelObj.setRed(pixelObj.getRed() + 30);
+            pixelObj.setRed(pixelObj.getRed() + 60);
         }
       }
     }
@@ -210,27 +210,49 @@ public class Picture extends SimplePicture
     }
   }
   
+  public void invert()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+          pixelObj.setRed(255 - pixelObj.getRed());
+          pixelObj.setGreen(255 - pixelObj.getGreen());
+          pixelObj.setBlue(255 - pixelObj.getBlue());
+      }
+    }
+  }
+  
   /** Method to create a collage of several pictures */
   public void createCollage()
   {
-      Picture canvas = new Picture(4608, 6144);
-      Picture origBridge = new Picture("bridge.jpg");
-      origBridge.scaleByHalf();
-      origBridge.write("scaledBridge.jpg");
-      
+      Pixel[][] pixels = this.getPixels2D();
+      //Picture canvas = new Picture(768, 1024);
+      Picture bridge = new Picture("bridge.jpg");
+      bridge = bridge.scaleBySix();
+      bridge.write("scaledBridge.jpg");
+
       Picture bridge1 = new Picture("scaledBridge.jpg");
       Picture bridge2 = new Picture("scaledBridge.jpg");
       Picture bridge3 = new Picture("scaledBridge.jpg");
       Picture bridge4 = new Picture("scaledBridge.jpg");
-      Picture bridge5 = new Picture("scaledBridge.jpg");
       
       bridge2.mirrorVerticalRightToLeft();
       bridge2.keepOnlyRed();
       bridge3.mirrorVerticalLeftToRight();
+      bridge3.grayScale();
+      bridge4.invert();
       
-      canvas.copyAndCrop(bridge2, 0, 1152, 0, 1536, 0, 1728);
-      canvas.copyAndCrop(bridge3, 0, 1152, 0, 1536, 1152, 1728);
+      this.copyAndCrop(bridge1, 0, 384, 0, 512, 0, 0);
+      this.copyAndCrop(bridge2, 0, 384, 0, 512, 0, 512);
+      this.copyAndCrop(bridge3, 0, 384, 0, 512, 384, 0);
+      this.copyAndCrop(bridge4, 0, 384, 0, 512, 384, 512);
       
+      //canvas.write("finalCollage.jpg");
+      
+      //Picture finalCollage = new Picture("finalCollage.jpg");
+      //finalCollage.explore();
     //     Picture flower1 = new Picture("flower1.jpg");
     //     Picture flower2 = new Picture("flower2.jpg");
     //     this.copy(flower1,0,0);
@@ -434,24 +456,25 @@ public class Picture extends SimplePicture
   }
   
   
-  public Picture scaleByHalf()
+  public Picture scaleBySix()
   {
-      Picture picture = new Picture(1152, 1536);
       Pixel[][] pixels = this.getPixels2D();
+      Picture picture = new Picture(pixels.length / 6, pixels[0].length / 6);
       Pixel[][] picturePixels = picture.getPixels2D();
       Pixel origPixel = null;
       int counter1 = 0;
       int counter2 = 0;
       
-      for (int i = 0; i < pixels.length; i += 2)
+      for (int i = 0; i < pixels.length; i += 6)
       {
-          for (int j = 0; j < pixels[i].length; j += 2)
+          for (int j = 0; j < pixels[i].length; j += 6)
           {
               origPixel = pixels[i][j];
               picturePixels[counter1][counter2].setColor(origPixel.getColor());
               counter2++;
           }
           counter1++;
+          counter2 = 0;
       }
       
       return picture;

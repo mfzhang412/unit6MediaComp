@@ -100,30 +100,40 @@ public class PictureTester
       snowman.copyAndCrop(seagull, 229, 323, 235, 350, 50, 100);
       snowman.explore();
     }
-  
-  public static void testScaleByHalf()
-  {
-      Picture snowman = new Picture("snowman.jpg");
-      
-      snowman.explore();
-      snowman.scaleByHalf();
-      snowman.explore();
-    }
-     
+    
   public static void testKeepOnlyRed()
   {
       Picture bridge = new Picture("bridge.jpg");
+      bridge = bridge.scaleBySix();
       
-      bridge.explore();
       bridge.keepOnlyRed();
+      bridge.explore();
+    }
+    
+  public static void testGrayScale()
+  {
+      Picture bridge = new Picture("bridge.jpg");
+      bridge = bridge.scaleBySix();
+      
+      bridge.grayScale();
+      bridge.explore();
+    }
+    
+  public static void testInvert()
+  {
+      Picture bridge = new Picture("bridge.jpg");
+      bridge = bridge.scaleBySix();
+      
+      bridge.invert();
       bridge.explore();
     }
     
   public static void testCreateCollage()
   {
-      Picture finalCollage = new Picture("finalCollage.jpg");
-      
-      finalCollage.explore();
+      Picture collage = new Picture(768, 1024);
+
+      collage.createCollage();
+      collage.explore();
     }
     
   /** Main method for testing.  Every class can have a main
