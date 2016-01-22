@@ -224,50 +224,6 @@ public class Picture extends SimplePicture
     }
   }
   
-  /** Method to create a collage of several pictures */
-  public void createCollage()
-  {
-      Pixel[][] pixels = this.getPixels2D();
-      //Picture canvas = new Picture(768, 1024);
-      Picture bridge = new Picture("bridge.jpg");
-      bridge = bridge.scaleBySix();
-      bridge.write("scaledBridge.jpg");
-
-      Picture bridge1 = new Picture("scaledBridge.jpg");
-      Picture bridge2 = new Picture("scaledBridge.jpg");
-      Picture bridge3 = new Picture("scaledBridge.jpg");
-      Picture bridge4 = new Picture("scaledBridge.jpg");
-      
-      bridge2.mirrorVerticalRightToLeft();
-      bridge2.keepOnlyRed();
-      bridge3.mirrorVerticalLeftToRight();
-      bridge3.grayScale();
-      bridge4.invert();
-      
-      this.copyAndCrop(bridge1, 0, 384, 0, 512, 0, 0);
-      this.copyAndCrop(bridge2, 0, 384, 0, 512, 0, 512);
-      this.copyAndCrop(bridge3, 0, 384, 0, 512, 384, 0);
-      this.copyAndCrop(bridge4, 0, 384, 0, 512, 384, 512);
-      
-      //canvas.write("finalCollage.jpg");
-      
-      //Picture finalCollage = new Picture("finalCollage.jpg");
-      //finalCollage.explore();
-    //     Picture flower1 = new Picture("flower1.jpg");
-    //     Picture flower2 = new Picture("flower2.jpg");
-    //     this.copy(flower1,0,0);
-    //     this.copy(flower2,100,0);
-    //     this.copy(flower1,200,0);
-    //     Picture flowerNoBlue = new Picture(flower2);
-    //     flowerNoBlue.zeroBlue();
-    //     this.copy(flowerNoBlue,300,0);
-    //     this.copy(flower1,400,0);
-    //     this.copy(flower2,500,0);
-    //     this.mirrorVertical();
-    //     this.write("collage.jpg");
-  }
-  
-  
   /** Method to show large changes in color 
     * @param edgeDist the distance for finding edges
     */
@@ -429,7 +385,32 @@ public class Picture extends SimplePicture
   }
   
   
-  public void copyAndCrop( Picture sourcePicture,
+  public Picture scaleBySix()
+  {
+      Pixel[][] pixels = this.getPixels2D();
+      Picture picture = new Picture(pixels.length / 6, pixels[0].length / 6);
+      Pixel[][] picturePixels = picture.getPixels2D();
+      Pixel origPixel = null;
+      int counter1 = 0;
+      int counter2 = 0;
+      
+      for (int i = 0; i < pixels.length; i += 6)
+      {
+          for (int j = 0; j < pixels[i].length; j += 6)
+          {
+              origPixel = pixels[i][j];
+              picturePixels[counter1][counter2].setColor(origPixel.getColor());
+              counter2++;
+          }
+          counter1++;
+          counter2 = 0;
+      }
+      
+      return picture;
+  }
+  
+  
+  public void cropAndCopy( Picture sourcePicture,
   int startSourceRow, int endSourceRow,
   int startSourceCol, int endSourceCol,
   int startDestRow, int startDestCol )
@@ -455,29 +436,54 @@ public class Picture extends SimplePicture
       }
   }
   
-  
-  public Picture scaleBySix()
+  public void copyAndCrop( Picture sourcePicture,
+  int startSourceRow, int endSourceRow,
+  int startSourceCol, int endSourceCol,
+  int startDestRow, int startDestCol )
+  {
+    Pixel sourcePixel = null;
+    Pixel endPixel = null;
+    Pixel[][] sourceGrid = sourcePicture.getPixels2D();
+    Pixel[][] endGrid = this.getPixels2D();
+    int counter1 = 0;
+    int counter2 = 0;
+    for (int i = startSourceRow; i < endSourceRow; i++)
+    {
+        for (int j = startSourceCol; j < endSourceCol; j++)
+        {
+            sourcePixel = sourceGrid[i][j];
+            endPixel = endGrid[startDestRow + counter1][startDestCol + counter2];
+            endPixel.setColor(sourcePixel.getColor());
+            counter2++;
+        }
+        counter1++;
+        counter2 = 0;
+    }
+  }
+    
+    
+  /** Method to create a collage of several pictures */
+  public void createCollage()
   {
       Pixel[][] pixels = this.getPixels2D();
-      Picture picture = new Picture(pixels.length / 6, pixels[0].length / 6);
-      Pixel[][] picturePixels = picture.getPixels2D();
-      Pixel origPixel = null;
-      int counter1 = 0;
-      int counter2 = 0;
+
+      Picture bridge1 = new Picture("scaledBridge.jpg");
+      Picture bridge2 = new Picture("scaledBridge.jpg");
+      Picture bridge3 = new Picture("scaledBridge.jpg");
+      Picture bridge4 = new Picture("scaledBridge.jpg");
       
-      for (int i = 0; i < pixels.length; i += 6)
-      {
-          for (int j = 0; j < pixels[i].length; j += 6)
-          {
-              origPixel = pixels[i][j];
-              picturePixels[counter1][counter2].setColor(origPixel.getColor());
-              counter2++;
-          }
-          counter1++;
-          counter2 = 0;
-      }
+      bridge2.mirrorVerticalRightToLeft();
+      bridge2.keepOnlyRed();
+      bridge3.mirrorVerticalLeftToRight();
+      bridge3.grayScale();
+      bridge4.invert();
       
-      return picture;
+      this.copyAndCrop(bridge1, 0, 384, 0, 512, 0, 0);
+      this.copyAndCrop(bridge2, 0, 384, 0, 512, 0, 512);
+      this.copyAndCrop(bridge3, 0, 384, 0, 512, 384, 0);
+      this.copyAndCrop(bridge4, 0, 384, 0, 512, 384, 512);
+      
+      this.write("finalCollage.jpg");
   }
 } // this } is the end of class Picture, put all new methods before this
 

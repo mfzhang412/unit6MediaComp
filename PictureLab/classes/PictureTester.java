@@ -101,6 +101,16 @@ public class PictureTester
       snowman.explore();
     }
     
+  public static void testScaleBySix()
+  {
+      Picture bridge = new Picture("bridge.jpg");
+      bridge = bridge.scaleBySix();
+      bridge.write("scaledBridge.jpg");
+      
+      Picture newBridge = new Picture("scaledBridge.jpg");
+      newBridge.explore();
+    }
+    
   public static void testKeepOnlyRed()
   {
       Picture bridge = new Picture("bridge.jpg");
@@ -170,6 +180,7 @@ public class PictureTester
     //testSetRedToHalfValueInTopHalf();
     //testClearBlueOverValue(200);
     //testGetAverageForColumn(0);
+    //testScaleBySix();
     testCreateCollage();
   }
 }
